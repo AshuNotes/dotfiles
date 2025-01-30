@@ -9,8 +9,8 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 -- lazy interface
 keymap.set("n", "<leader>ll", "<cmd>Lazy<CR>", { desc = "Lazy interface" })
 -- increment/decrement numbers
-keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
+keymap.set("n", "+", "<C-a>", { desc = "Increment number" }) -- increment
+keymap.set("n", "-", "<C-x>", { desc = "Decrement number" }) -- decrement
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
@@ -57,33 +57,13 @@ keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find str
 keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
 keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
 
--- buffers
-keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-keymap.set("n", "<leader>bd", function()
-    vim.cmd("bd")
-end, { desc = "Delete Buffer" })
-keymap.set("n", "<leader>bo", function()
-    vim.cmd("bdelete")
-end, { desc = "Delete Other Buffers" })
-
--- Clear search and stop snippet on escape
-keymap.set({ "i", "n", "s" }, "<esc>", function()
-    vim.cmd("noh")
-    return "<esc>"
-end, { expr = true, desc = "Escape and Clear hlsearch" })
-
 -- diagnostic
 local diagnostic_goto = function(next, severity)
-    local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-    severity = severity and vim.diagnostic.severity[severity] or nil
-    return function()
-        go({ severity = severity })
-    end
+  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+  severity = severity and vim.diagnostic.severity[severity] or nil
+  return function()
+    go({ severity = severity })
+  end
 end
 
 keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })

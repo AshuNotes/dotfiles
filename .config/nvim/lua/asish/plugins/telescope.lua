@@ -23,6 +23,17 @@ return {
     })
 
     telescope.setup({
+      pickers = {
+        find_files = {
+          theme = "ivy",
+        },
+        extensions = {
+          fzf = {},
+        },
+      },
+
+      telescope.load_extension("fzf"),
+
       defaults = {
         path_display = { "smart" },
         mappings = {
@@ -35,7 +46,5 @@ return {
         },
       },
     })
-
-    telescope.load_extension("fzf")
   end,
 }
