@@ -22,12 +22,6 @@ sudo mv /opt/nvim-linux64 /opt/nvim
 rm -rf ~/nvim-linux64.tar.gz
 ```
 
-Add the following line in ~/.zshrc or ~/.bashrc:
-
-```bash
-export PATH="$PATH:/opt/nvim/bin"
-```
-
 ## Cloning repository
 
 Clone the AshuNotes/dotfiles repository:
