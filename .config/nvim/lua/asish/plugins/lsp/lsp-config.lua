@@ -29,8 +29,6 @@ return {
         "graphql",
         "tailwindcss",
         "svelte",
-        -- "lua_ls", -- Lua LSP
-        -- Python and C++ LSPs
         "clangd",
       },
       automatic_installation = true,
@@ -139,11 +137,6 @@ return {
           },
         })
       end,
-
-      -- Python LSP configuration
-      require("lspconfig").pylsp.setup({
-        cmd = { "/home/ashu/python-venv/bin/pylsp" },
-      }),
 
       -- C++ LSP configuration
       ["clangd"] = function()
