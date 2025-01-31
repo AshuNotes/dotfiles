@@ -22,6 +22,9 @@ alias home="cd ~"
 alias update="sudo apt update && sudo apt upgrade -y"
 alias ezsh="nvim ~/.zshrc"
 alias ealias="nvim ~/.config/zsh/.aliases"
+alias szsh="source ~/.zshrc"
+alias pya="source ~/playGround/work_py/env/bin/activate"
+alias pyd="deactivate"
 
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"

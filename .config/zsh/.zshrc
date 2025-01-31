@@ -37,23 +37,23 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' globbing_directories ignore
 
-if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-if [ -n "$force_color_prompt" ]; then
-  if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
-  else
-    color_prompt=
-  fi
-fi
+# if [ "$color_prompt" = yes ]; then
+#   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# else
+#   PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+# fi
+# unset color_prompt force_color_prompt
+#
+# if [ -n "$force_color_prompt" ]; then
+#   if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+#     # We have color support; assume it's compliant with Ecma-48
+#     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+#     # a case would tend to support setf rather than setaf.)
+#     color_prompt=yes
+#   else
+#     color_prompt=
+#   fi
+# fi
 
 
 
@@ -66,6 +66,8 @@ fi
 [ -f ~/.config/zsh/.aliases ] && source ~/.config/zsh/.aliases
 
 export PATH="$PATH:/opt/nvim/bin"
+
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -100,7 +102,13 @@ prompt_dir() {
   print -n "%B%F{#0087af}${parent}/%f%b"
   print -n "%B%F{#00afff}${current}%f%b"
 }
-
+venv_prompt() {
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    venv_name=$(basename "$VIRTUAL_ENV")  # Extract the name
+    echo -n "%F{#5fd700}($venv_name)%f " # Green color, customize as needed
+  fi
+}
+# %F{#5fd700}
 #          
 autoload -Uz vcs_info
 precmd() {vcs_info}
@@ -108,7 +116,8 @@ precmd() {vcs_info}
 zstyle ':vcs_info:git:*' formats ' %{%F{226}%}(%{%F{10}%}%b%{%F{226}%})'
 setopt PROMPT_SUBST
 # Final prompt definition
-PROMPT='
-$(prompt_dir) ${vcs_info_msg_0_}
-%F{#5fd700}'$PROMPT_END_SYMBOL'%f '
+PROMPT='                                                                                                                                 
+$(prompt_dir)  ${vcs_info_msg_0_}
+'$PROMPT_END_SYMBOL'%f '
 
+RPROMPT='$(venv_prompt)'
